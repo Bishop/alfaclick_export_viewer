@@ -8,27 +8,39 @@ import (
 )
 
 func main() {
-	println("hello")
-
 	data := new(Database)
-	readFile("example.xml", data)
+
+	readXmlData("example.xml", data)
 
 	records := recordsFromItems(data)
 
-	//fmt.Println(records)
-
-	tmpl, _ := template.New("display.go.tmpl").ParseFiles("display.go.tmpl")
-	_ = tmpl.Execute(os.Stdout, records)
+	printRecords(records, "display.go.tmpl")
 }
 
-func readFile(filename string, data interface{}) {
-	content, _ := os.ReadFile(filename)
+func readXmlData(filename string, data interface{}) {
+	content, err := os.ReadFile(filename)
 
-	err := xml.Unmarshal(content, data)
+	fatalOnError(err)
 
+	err = xml.Unmarshal(content, data)
+
+	fatalOnError(err)
+
+	return
+}
+
+func printRecords(records *Records, templateName string) {
+	tmpl, err := template.New(templateName).ParseFiles(templateName)
+
+	fatalOnError(err)
+
+	err = tmpl.Execute(os.Stdout, records)
+
+	fatalOnError(err)
+}
+
+func fatalOnError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	return
 }

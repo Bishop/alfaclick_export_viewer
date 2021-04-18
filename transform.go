@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -12,13 +11,13 @@ func recordsFromItems(data *Database) *Records {
 	records := make(Records, len(data.Items))
 
 	for i, item := range data.Items {
-		records[i] = *makeRecord(&item.Fields)
+		records[i] = makeRecord(&item.Fields)
 	}
 
 	return &records
 }
 
-func makeRecord(fields *[]Field) *Record {
+func makeRecord(fields *[]Field) Record {
 	record := Record{}
 
 	for _, field := range *fields {
@@ -44,15 +43,13 @@ func makeRecord(fields *[]Field) *Record {
 		}
 	}
 
-	return &record
+	return record
 }
 
 func parseFixDate(s string) time.Time {
 	t, err := time.Parse("02.01.2006", s)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatalOnError(err)
 
 	return t
 }
@@ -60,9 +57,7 @@ func parseFixDate(s string) time.Time {
 func parseOpDate(s string) time.Time {
 	t, err := time.Parse("20060102", s)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatalOnError(err)
 
 	return t
 }
@@ -76,15 +71,15 @@ func parseAmount(s string) Amount {
 }
 
 func parseNumber(s string) float64 {
-	s = strings.Replace(s, " ", "", -1)
-	s = strings.Replace(s, " ", "", -1)
-	s = strings.Replace(s, ",", ".", -1)
+	normalization := map[string]string{" ": "", " ": "", ",": "."}
+
+	for old, replace := range normalization {
+		s = strings.ReplaceAll(s, old, replace)
+	}
 
 	amount, err := strconv.ParseFloat(s, 64)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	fatalOnError(err)
 
 	return amount
 }
