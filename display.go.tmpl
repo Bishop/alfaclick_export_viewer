@@ -1,8 +1,8 @@
 {{range . }}
-{{- .FixDate.Format "2006-01-02"}}{{"\t"}}
-{{- if .OpDate.IsZero}}{{"\t"}}{{else}}{{.OpDate.Format "2006-01-02"}}{{end}}{{"\t"}}
-{{- printf "% .2f" .AccountAmount.Amount}} {{.AccountAmount.Currency}}{{"\t"}}
-{{- if eq .AccountAmount.Currency .OperationAmount.Currency }}{{"\t"}}{{else}}{{printf "% .2f" .OperationAmount.Amount}} {{.OperationAmount.Currency}}{{end}}{{"\t"}}
+{{- .FixDateS}}{{"\t"}}
+{{- if .OpDate.IsZero}}{{"\t"}}{{else}}{{.OpDateS}}{{end}}{{"\t"}}
+{{- .AccountAmount.String}}{{"\t"}}
+{{- if eq .AccountAmount.Currency .OperationAmount.Currency }}{{"\t"}}{{else}}{{.OperationAmount.String}}{{end}}{{"\t"}}
 {{- if eq .Shop ""}}
 {{- printf "%.50s" .Place}}
 {{- else}}
