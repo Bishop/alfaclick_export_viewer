@@ -39,6 +39,14 @@ func (r *Record) OneCurrency() bool {
 	return r.AccountAmount.Currency == r.OperationAmount.Currency
 }
 
+func (r *Record) OperationAmountS() string {
+	if r.OneCurrency() {
+		return ""
+	} else {
+		return r.OperationAmount.String()
+	}
+}
+
 func (r *Record) FixDateS() string {
 	return r.FixDate.Format("2006-01-02")
 }

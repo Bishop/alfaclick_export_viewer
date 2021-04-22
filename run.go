@@ -5,6 +5,9 @@ import (
 	"log"
 	"os"
 	"text/template"
+
+	"github.com/gdamore/tcell/v2"
+	"github.com/rivo/tview"
 )
 
 func main() {
@@ -14,7 +17,59 @@ func main() {
 
 	records := recordsFromItems(data)
 
-	printRecords(records, "display.go.tmpl")
+	if false {
+		printRecords(records, "display.go.tmpl")
+	} else {
+		createUiTable(records)
+	}
+}
+
+func createUiTable(records *Records) {
+	table := tview.NewTable()
+	for i, record := range *records {
+		table.SetCell(i, 0, &tview.TableCell{
+			Text:            record.FixDateS(),
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorLightGray,
+			BackgroundColor: tcell.ColorBlack,
+		})
+		table.SetCell(i, 1, &tview.TableCell{
+			Text:            record.OpDateS(),
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorGray,
+			BackgroundColor: tcell.ColorBlack,
+		})
+		table.SetCell(i, 2, &tview.TableCell{
+			Text:            record.AccountAmount.String(),
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorLimeGreen,
+			BackgroundColor: tcell.ColorBlack,
+		})
+		table.SetCell(i, 3, &tview.TableCell{
+			Text:            record.OperationAmountS(),
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorLightGreen,
+			BackgroundColor: tcell.ColorBlack,
+		})
+		table.SetCell(i, 4, &tview.TableCell{
+			Text:            record.Shop,
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorLightGray,
+			BackgroundColor: tcell.ColorBlack,
+		})
+		table.SetCell(i, 5, &tview.TableCell{
+			Text:            record.Place,
+			Align:           tview.AlignLeft,
+			Color:           tcell.ColorGray,
+			BackgroundColor: tcell.ColorBlack,
+		})
+	}
+
+	table.SetSelectable(true, false)
+
+	if err := tview.NewApplication().SetRoot(table, true).Run(); err != nil {
+		panic(err)
+	}
 }
 
 func readXmlData(filename string, data interface{}) {
