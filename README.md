@@ -2,6 +2,7 @@
 
 ## Roadmap
 
-1. parse and display
-1. cli gui
-1. export to ledger
+1. [x] parse and display
+1. [x] cli gui
+1. [ ] command line param for filename
+1. [ ] export to ledger
