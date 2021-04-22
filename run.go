@@ -39,16 +39,25 @@ func createUiTable(records *Records) {
 			Color:           tcell.ColorGray,
 			BackgroundColor: tcell.ColorBlack,
 		})
+
+		color1 := tcell.ColorLimeGreen
+		color2 := tcell.ColorLightGreen
+
+		if record.AccountAmount.Amount >= 0 {
+			color1 = tcell.ColorAquaMarine
+			color2 = tcell.ColorAquaMarine
+		}
+
 		table.SetCell(i, 2, &tview.TableCell{
 			Text:            record.AccountAmount.String(),
 			Align:           tview.AlignLeft,
-			Color:           tcell.ColorLimeGreen,
+			Color:           color1,
 			BackgroundColor: tcell.ColorBlack,
 		})
 		table.SetCell(i, 3, &tview.TableCell{
 			Text:            record.OperationAmountS(),
 			Align:           tview.AlignLeft,
-			Color:           tcell.ColorLightGreen,
+			Color:           color2,
 			BackgroundColor: tcell.ColorBlack,
 		})
 		table.SetCell(i, 4, &tview.TableCell{
