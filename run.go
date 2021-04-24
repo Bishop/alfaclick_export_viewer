@@ -51,13 +51,13 @@ func createUiTable(title string, records *Records) {
 	table := tview.NewTable()
 	for i, record := range *records {
 		table.SetCell(i, 0, &tview.TableCell{
-			Text:            record.FixDateS(),
+			Text:            record.AccDateS(),
 			Align:           tview.AlignLeft,
 			Color:           tcell.ColorLightGray,
 			BackgroundColor: tcell.ColorBlack,
 		})
 		table.SetCell(i, 1, &tview.TableCell{
-			Text:            record.OpDateS(),
+			Text:            record.TxDateS(),
 			Align:           tview.AlignLeft,
 			Color:           tcell.ColorGray,
 			BackgroundColor: tcell.ColorBlack,
@@ -66,19 +66,19 @@ func createUiTable(title string, records *Records) {
 		color1 := tcell.ColorLimeGreen
 		color2 := tcell.ColorLightGreen
 
-		if record.AccountAmount.Amount >= 0 {
+		if record.AccAmount.Amount >= 0 {
 			color1 = tcell.ColorAquaMarine
 			color2 = tcell.ColorAquaMarine
 		}
 
 		table.SetCell(i, 2, &tview.TableCell{
-			Text:            record.AccountAmount.String(),
+			Text:            record.AccAmount.String(),
 			Align:           tview.AlignLeft,
 			Color:           color1,
 			BackgroundColor: tcell.ColorBlack,
 		})
 		table.SetCell(i, 3, &tview.TableCell{
-			Text:            record.OperationAmountS(),
+			Text:            record.TxAmountS(),
 			Align:           tview.AlignLeft,
 			Color:           color2,
 			BackgroundColor: tcell.ColorBlack,

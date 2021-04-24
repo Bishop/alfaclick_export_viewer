@@ -24,13 +24,13 @@ func makeRecord(fields *[]Field) Record {
 		switch field.Name {
 		case "Дата",
 			"Date":
-			record.FixDate = parseFixDate(field.Value)
+			record.AccDate = parseFixDate(field.Value)
 		case "Сумма в валюте счета",
 			"Amount in account currency":
-			record.AccountAmount = parseAmount(field.Value)
+			record.AccAmount = parseAmount(field.Value)
 		case "Сумма в валюте операции",
 			"Amount in transaction currency":
-			record.OperationAmount = parseAmount(field.Value)
+			record.TxAmount = parseAmount(field.Value)
 		case "Примечание",
 			"Note":
 			var opDate string
@@ -38,7 +38,7 @@ func makeRecord(fields *[]Field) Record {
 			opDate, record.Place, record.Category, record.Shop = parseNotes(field.Value)
 
 			if opDate != "" {
-				record.OpDate = parseOpDate(opDate)
+				record.TxDate = parseOpDate(opDate)
 			}
 		}
 	}

@@ -1,8 +1,8 @@
 {{range . }}
-{{- .FixDateS}}{{"\t"}}
-{{- if .OpDate.IsZero}}{{"\t"}}{{else}}{{.OpDateS}}{{end}}{{"\t"}}
-{{- .AccountAmount.String}}{{"\t"}}
-{{- if eq .AccountAmount.Currency .OperationAmount.Currency }}{{"\t"}}{{else}}{{.OperationAmount.String}}{{end}}{{"\t"}}
+{{- .AccDateS}}{{"\t"}}
+{{- if .TxDate.IsZero}}{{"\t"}}{{else}}{{.TxDateS}}{{end}}{{"\t"}}
+{{- .AccAmount.String}}{{"\t"}}
+{{- if eq .AccAmount.Currency .TxAmount.Currency }}{{"\t"}}{{else}}{{.TxAmount.String}}{{end}}{{"\t"}}
 {{- if eq .Shop ""}}
 {{- printf "%.50s" .Place}}
 {{- else}}

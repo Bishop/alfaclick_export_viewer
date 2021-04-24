@@ -21,13 +21,13 @@ type Field struct {
 type Records []Record
 
 type Record struct {
-	FixDate         time.Time
-	OpDate          time.Time
-	Place           string
-	Category        string
-	Shop            string
-	AccountAmount   Amount
-	OperationAmount Amount
+	AccDate   time.Time
+	TxDate    time.Time
+	Place     string
+	Category  string
+	Shop      string
+	AccAmount Amount
+	TxAmount  Amount
 }
 
 type Amount struct {
@@ -36,26 +36,26 @@ type Amount struct {
 }
 
 func (r *Record) OneCurrency() bool {
-	return r.AccountAmount.Currency == r.OperationAmount.Currency
+	return r.AccAmount.Currency == r.TxAmount.Currency
 }
 
-func (r *Record) OperationAmountS() string {
+func (r *Record) TxAmountS() string {
 	if r.OneCurrency() {
 		return ""
 	} else {
-		return r.OperationAmount.String()
+		return r.TxAmount.String()
 	}
 }
 
-func (r *Record) FixDateS() string {
-	return r.FixDate.Format("2006-01-02")
+func (r *Record) AccDateS() string {
+	return r.AccDate.Format("2006-01-02")
 }
 
-func (r *Record) OpDateS() string {
-	if r.OpDate.IsZero() {
+func (r *Record) TxDateS() string {
+	if r.TxDate.IsZero() {
 		return ""
 	} else {
-		return r.OpDate.Format("2006-01-02")
+		return r.TxDate.Format("2006-01-02")
 	}
 }
 
