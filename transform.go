@@ -85,8 +85,6 @@ func parseNumber(s string) float64 {
 }
 
 func parseNotes(s string) (string, string, string, string) {
-	// 20210413 moskva                     Покупка товара / получение услуг    Y.M mif
-
 	notesRegExp := regexp.MustCompile(`(\d{8})\s(.*?)\s{2,}(.*?)\s{2,}(.*)`)
 
 	result := notesRegExp.FindStringSubmatch(s)
