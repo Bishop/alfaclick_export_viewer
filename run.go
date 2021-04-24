@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/xml"
-	"log"
 	"os"
 	"path/filepath"
 	"text/template"
@@ -14,7 +13,7 @@ import (
 func main() {
 	data := new(Database)
 
-	fileName, err := filepath.Abs("example.xml")
+	fileName, err := filepath.Abs(getFileName())
 
 	fatalOnError(err)
 
@@ -27,6 +26,25 @@ func main() {
 	} else {
 		createUiTable(fileName, records)
 	}
+}
+
+func getFileName() (fileName string) {
+	if len(os.Args) == 2 {
+		fileName = os.Args[1]
+	} else {
+		files, err := filepath.Glob("./*.xml")
+
+		fatalOnError(err)
+
+		if len(files) > 0 {
+			fileName = files[0]
+		} else {
+			println("No filename was given")
+			os.Exit(1)
+		}
+	}
+
+	return
 }
 
 func createUiTable(title string, records *Records) {
@@ -111,6 +129,6 @@ func printRecords(records *Records, templateName string) {
 
 func fatalOnError(err error) {
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 }
