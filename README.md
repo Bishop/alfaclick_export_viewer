@@ -1,4 +1,6 @@
-# Parser
+# Alfa Click Export Viewer
+
+A simple tool for visualizing XML export files from Alfa Bank Internet bank (https://click.alfa-bank.by/).
 
 ## Roadmap
 
