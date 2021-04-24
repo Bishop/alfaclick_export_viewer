@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"log"
 	"os"
+	"path/filepath"
 	"text/template"
 
 	"github.com/gdamore/tcell/v2"
@@ -13,18 +14,22 @@ import (
 func main() {
 	data := new(Database)
 
-	readXmlData("example.xml", data)
+	fileName, err := filepath.Abs("example.xml")
+
+	fatalOnError(err)
+
+	readXmlData(fileName, data)
 
 	records := recordsFromItems(data)
 
 	if false {
 		printRecords(records, "display.go.tmpl")
 	} else {
-		createUiTable(records)
+		createUiTable(fileName, records)
 	}
 }
 
-func createUiTable(records *Records) {
+func createUiTable(title string, records *Records) {
 	table := tview.NewTable()
 	for i, record := range *records {
 		table.SetCell(i, 0, &tview.TableCell{
@@ -75,6 +80,7 @@ func createUiTable(records *Records) {
 	}
 
 	table.SetSelectable(true, false)
+	table.SetTitle(title).SetBorder(true).SetBorderColor(tcell.ColorGray)
 
 	if err := tview.NewApplication().SetRoot(table, true).Run(); err != nil {
 		panic(err)
