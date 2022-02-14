@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"os"
 	"path/filepath"
-	"text/template"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -21,11 +20,7 @@ func main() {
 
 	records := recordsFromItems(data)
 
-	if false {
-		printRecords(records, "display.go.tmpl")
-	} else {
-		createUiTable(fileName, records)
-	}
+	createUiTable(fileName, records)
 }
 
 func getFileName() (fileName string) {
@@ -115,16 +110,6 @@ func readXmlData(filename string, data interface{}) {
 	fatalOnError(err)
 
 	return
-}
-
-func printRecords(records *Records, templateName string) {
-	tmpl, err := template.New(templateName).ParseFiles(templateName)
-
-	fatalOnError(err)
-
-	err = tmpl.Execute(os.Stdout, records)
-
-	fatalOnError(err)
 }
 
 func fatalOnError(err error) {
