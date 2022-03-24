@@ -19,6 +19,7 @@ func main() {
 	readXmlData(fileName, data)
 
 	records := recordsFromItems(data)
+	sortRecordsByDate(*records)
 
 	createUiTable(fileName, records)
 }

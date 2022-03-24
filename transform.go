@@ -2,6 +2,7 @@ package main
 
 import (
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -94,4 +95,10 @@ func parseNotes(s string) (string, string, string, string) {
 	} else {
 		return "", s, "", ""
 	}
+}
+
+func sortRecordsByDate(records []Record) {
+	sort.Slice(records, func(i, j int) bool {
+		return records[j].Date().Before(records[i].Date())
+	})
 }

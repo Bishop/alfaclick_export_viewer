@@ -51,6 +51,14 @@ func (r *Record) AccDateS() string {
 	return r.AccDate.Format("2006-01-02")
 }
 
+func (r *Record) Date() time.Time {
+	if r.TxDate.IsZero() {
+		return r.AccDate
+	} else {
+		return r.TxDate
+	}
+}
+
 func (r *Record) TxDateS() string {
 	if r.TxDate.IsZero() {
 		return ""
