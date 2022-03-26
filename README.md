@@ -9,4 +9,3 @@ A simple tool for visualizing XML export files from Alfa Bank Internet bank (htt
 1. [x] show filename in title
 1. [x] command line param for filename
 1. [x] open first xml in current directory
-1. [ ] export to ledger
